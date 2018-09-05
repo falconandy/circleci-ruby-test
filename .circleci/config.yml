@@ -3,30 +3,28 @@ jobs:
   build:
     docker:
     - image: circleci/ruby:2.5.1
-      environment:
-        BUNDLE_JOBS: 3
-        BUNDLE_RETRY: 3
-        BUNDLE_PATH: vendor/bundle
+
+    working_directory: ~/repo
+
     steps:
     - checkout
 
-    - run:
-        name: Which bundler?
-        command: bundle -v
-
     - restore_cache:
         keys:
-        - ruby-bundle-v2-{{ checksum "Gemfile.lock" }}
+        - v1-dependencies-{{ checksum "Gemfile.lock" }}
+        - v1-dependencies-
 
     - run:
-        name: Bundle Install
-        command: bundle check || bundle install
+        name: install dependencies
+        command: |
+          bundle install --jobs=4 --retry=3 --path vendor/bundle
 
     - save_cache:
-        key: ruby-bundle-v2-{{ checksum "Gemfile.lock" }}
         paths:
-        - vendor/bundle
+        - ./vendor/bundle
+        key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
     - run:
+        name: run tests
         command: |
           bundle exec rake test

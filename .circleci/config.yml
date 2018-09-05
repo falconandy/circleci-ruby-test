@@ -42,4 +42,4 @@ jobs:
   test-2.3:
     <<: *test-template
     docker:
-    - image: circleci/runy:2.3.7
+    - image: circleci/ruby:2.3.7

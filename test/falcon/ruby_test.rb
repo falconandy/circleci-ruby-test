@@ -8,4 +8,8 @@ class Falcon::RubyTest < Minitest::Test
   def test_it_does_something_useful
     assert_equal false, 1 == 2
   end
+
+  def test_it_does_something_useful2
+    assert_equal false, 1 == 1
+  end
 end

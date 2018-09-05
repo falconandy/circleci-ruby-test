@@ -10,6 +10,6 @@ class Falcon::RubyTest < Minitest::Test
   end
 
   def test_it_does_something_useful2
-    assert_equal false, 1 == 1
+    assert_equal true, 1 == 1
   end
 end

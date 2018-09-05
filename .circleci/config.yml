@@ -1,6 +1,13 @@
 version: 2
+workflows:
+  version: 2
+  test:
+    jobs:
+    - test-2.5
+    - test-2.4
+    - test-2.3
 jobs:
-  build:
+  test-2.5: &test-template
     docker:
     - image: circleci/ruby:2.5.1
 
@@ -28,3 +35,11 @@ jobs:
         name: run tests
         command: |
           bundle exec rake test
+  test-2.4:
+    <<: *test-template
+    docker:
+    - image: circleci/ruby:2.4.4
+  test-2.3:
+    <<: *test-template
+    docker:
+    - image: circleci/runy:2.3.7
